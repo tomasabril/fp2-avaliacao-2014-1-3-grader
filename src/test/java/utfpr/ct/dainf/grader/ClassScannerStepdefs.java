@@ -22,6 +22,7 @@ import static org.testng.Assert.*;
 import org.testng.Reporter;
 import utfpr.ct.dainf.grader.support.ClassEntry;
 import utfpr.ct.dainf.grader.support.ClassScanner;
+import utfpr.ct.dainf.grader.support.InterpreterRunner;
 
 /**
  *
@@ -38,6 +39,7 @@ public class ClassScannerStepdefs {
     private Class currentClass;
     private final ClassScanner scanner = new ClassScanner();
     private final static Interpreter bsh = new Interpreter();
+    private int scriptTimeout = 0;
     private static final PrintStream SYSTEM_OUT = System.out;
     private static final InputStream SYSTEM_IN = System.in;
     
@@ -56,7 +58,12 @@ public class ClassScannerStepdefs {
         grade += points;
         Reporter.log(String.format("Got %f/%f/%f points", points, grade, maxGrade), true);
     }
-        
+      
+    @Given("^I set the script timeout to (\\d{1,6})$")
+    public void setScriptTimeout(int timeout) {
+        scriptTimeout = timeout;
+    }
+    
     @Given("^class '(.+)' exists somewhere store class in <(\\w+)>$")
     public ClassEntry classExistsSomewhere(String className, String var) throws Throwable {
         ClassEntry ce = scanner.findClassByName(className);
@@ -137,12 +144,17 @@ public class ClassScannerStepdefs {
     
     @Given("^I evaluate '(.+)'$")
     public void evaluateCode(String code) throws Throwable {
-        bsh.eval(code);
+        InterpreterRunner ir = new InterpreterRunner(bsh, code);
+        ir.start();
+        ir.join(scriptTimeout);
     }
     
     @Given("^I evaluate '(.+)' returning <(\\w+)>$")
     public void evaluateCode(String code, String var) throws Throwable {
-        Object result = bsh.eval(code);
+        InterpreterRunner ir = new InterpreterRunner(bsh, code);
+        ir.start();
+        ir.join(scriptTimeout);
+        Object result = ir.getResult();
         bsh.set(var, result);
     }
     

@@ -6,6 +6,7 @@ Feature: Scans application for packages and classes
     Background:
         Given the maximum grade is 2
         Given the main class is 'Avaliacao3'
+        Given I set the script timeout to 3000
         Given I evaluate 'import utfpr.ct.dainf.grader.*;'
         Given I evaluate 'String testFilePath = ClassLoader.getSystemClassLoader().getResource("testdata.txt").getFile();' 
         And I evaluate 'java.io.File testFile = new java.io.File(testFilePath);'
