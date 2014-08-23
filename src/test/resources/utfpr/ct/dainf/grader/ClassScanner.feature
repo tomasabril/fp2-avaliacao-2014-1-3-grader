@@ -200,10 +200,13 @@ Feature: Scans application for packages and classes
         And I evaluate 'outstr = mainout.toString()'
         And expression 'outstr.trim().isEmpty()' evaluates to <false>
         Then award .05 points
-        And expression 'outstr.contains(credorListTest.get(1).toString())' evaluates to <true>
-        And expression 'outstr.toLowerCase().contains("inexistente")' evaluates to <true>
+        Given expression 'outstr.contains(credorListTest.get(1).toString())' evaluates to <true>
         And expression 'outstr.contains(credorListTest.get(2).toString())' evaluates to <true>
-        Then award .15 points
+        Then award .05 points
+        Given expression 'outstr.toLowerCase().contains("inexistente")' evaluates to <true>
+        Then award .05 points
+        Given expression 'outstr.toLowerCase().contains("informe")' evaluates to <true>
+        Then award .05 points
 
     Scenario: Report final grade.
         Given I report grade formatted as 'FINAL GRADE: %.1f'
