@@ -1,0 +1,13 @@
+// grant permissions needed to run tests
+grant {
+    permission java.util.PropertyPermission "*", "read,write";
+    permission java.lang.RuntimePermission "getProtectionDomain";
+    permission java.lang.RuntimePermission "createClassLoader";
+    permission java.lang.RuntimePermission "accessDeclaredMembers";
+    permission java.lang.RuntimePermission "setSecurityManager";
+    permission java.lang.RuntimePermission "setIO";
+    permission java.lang.RuntimePermission "getenv.CUCUMBER_OPTIONS";
+    permission java.lang.RuntimePermission "getenv.cucumber.options";
+    permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+    permission java.io.FilePermission "<<ALL FILES>>", "read,write,delete";
+};
