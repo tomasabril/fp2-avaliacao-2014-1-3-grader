@@ -191,7 +191,7 @@ Feature: Scans application for packages and classes
         Given evaluating 'dummyTestReader.readLine()' throws instance of 'java.io.IOException' save in <dummyEx>
         Then award .05 points
 
-    Scenario: Run program and check for correct output.
+    Scenario: Run program and check for correct output. (0.2)
         Given I report 'GRADING TASK 10...'
         Given class 'Avaliacao3' exists somewhere store class in <clazz>
         And I import <clazz>
@@ -208,7 +208,7 @@ Feature: Scans application for packages and classes
         And expression 'outstr.contains(credorListTest.get(2).toString())' evaluates to <true>
         Then award .15 points
 
-    Scenario: Run program and check for input processing.
+    Scenario: Run program and check for input processing. (0.2)
         Given I report 'GRADING TASK 11...'
         Given class 'Avaliacao3' exists somewhere store class in <clazz>
         And I import <clazz>
@@ -223,8 +223,12 @@ Feature: Scans application for packages and classes
         Given expression 'outstr.contains(credorListTest.get(1).toString())' evaluates to <true>
         And expression 'outstr.contains(credorListTest.get(2).toString())' evaluates to <true>
         Then award .05 points
+
+    Scenario: Check for non-existent record treatment.
         Given expression 'outstr.toLowerCase().contains("inexistente")' evaluates to <true>
         Then award .05 points
+
+    Scenario: Check for non-numeric input treatment.
         Given expression 'outstr.toLowerCase().contains("informe")' evaluates to <true>
         Then award .05 points
 
