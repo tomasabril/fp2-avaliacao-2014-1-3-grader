@@ -17,18 +17,38 @@ Feature: Scans application for packages and classes
         Given I report 'STARTING GRADING...'
         Given I report 'GRADING TASK 1...'
         Given class 'Credor' exists somewhere store class in <credorClass>
+        And I import <credorClass>
         And class <credorClass> implements 'java.lang.Comparable'
-        Then award .1 points
+        Then award .05 points
         Given class <credorClass> implements 'java.lang.Comparable<utfpr.ct.dainf.if62c.avaliacao.Credor>'
-        Then award .1 points
+        Then award .06 points
+        Given I evaluate 'credorTest1 = new Credor(1L, "Fulano", 1111.11, new java.util.Date(111111))'
+        Given I evaluate 'credorTest2 = new Credor(2L, "Beltrano", 2222.22, new java.util.Date(222222));'
+        And expression 'credorTest1.compareTo(credorTest2) < 0' evaluates to <true>
+        Then award .03 points
+        Given expression 'credorTest2.compareTo(credorTest1) > 0' evaluates to <true>
+        Then award .03 points
+        Given expression 'credorTest1.compareTo(credorTest1) == 0' evaluates to <true>
+        Then award .03 points
+
 
     Scenario: Turn class CredorComparator into an comparator (0.2)
         Given I report 'GRADING TASK 2...'
         Given class 'CredorComparator' exists somewhere store class in <credorComparatorClass>
         And class <credorComparatorClass> implements 'java.util.Comparator'
-        Then award .1 points
+        And I import <credorComparatorClass>
+        Then award .05 points
         Given class <credorComparatorClass> implements 'java.util.Comparator<utfpr.ct.dainf.if62c.avaliacao.Credor>'
-        Then award .1 points
+        Then award .06 points
+        Given I evaluate 'credorTest1 = new Credor(1L, "Fulano", 1111.11, new java.util.Date(111111))'
+        Given I evaluate 'credorTest2 = new Credor(2L, "Beltrano", 2222.22, new java.util.Date(222222));'
+        Given I evaluate 'credorComparator = new CredorComparator();'
+        And expression 'credorComparator.compare(credorTest1, credorTest2) < 0' evaluates to <true>
+        Then award .03 points
+        Given expression 'credorComparator.compare(credorTest2, credorTest1) > 0' evaluates to <true>
+        Then award .03 points
+        Given expression 'credorComparator.compare(credorTest1, credorTest1) == 0' evaluates to <true>
+        Then award .03 points
 
     Scenario: Implement constructor ProcessaPagamento(File) (0.1)
         Given I report 'GRADING TASK 3...'
