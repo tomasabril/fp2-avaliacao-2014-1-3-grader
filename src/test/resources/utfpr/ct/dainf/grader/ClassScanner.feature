@@ -22,12 +22,18 @@ Feature: Scans application for packages and classes
         Then award .05 points
         Given class <credorClass> implements 'java.lang.Comparable<utfpr.ct.dainf.if62c.avaliacao.Credor>'
         Then award .06 points
+
+    Scenario: Check comparable less than result
         Given I evaluate 'credorTest1 = new Credor(1L, "Fulano", 1111.11, new java.util.Date(111111))'
         Given I evaluate 'credorTest2 = new Credor(2L, "Beltrano", 2222.22, new java.util.Date(222222));'
         And expression 'credorTest1.compareTo(credorTest2) < 0' evaluates to <true>
         Then award .03 points
+
+    Scenario: Check comparable greater than result
         Given expression 'credorTest2.compareTo(credorTest1) > 0' evaluates to <true>
         Then award .03 points
+
+    Scenario: Check comparable equal result
         Given expression 'credorTest1.compareTo(credorTest1) == 0' evaluates to <true>
         Then award .03 points
 
@@ -40,13 +46,19 @@ Feature: Scans application for packages and classes
         Then award .05 points
         Given class <credorComparatorClass> implements 'java.util.Comparator<utfpr.ct.dainf.if62c.avaliacao.Credor>'
         Then award .06 points
+
+    Scenario: Check comparator less than result
         Given I evaluate 'credorTest1 = new Credor(1L, "Fulano", 1111.11, new java.util.Date(111111))'
         Given I evaluate 'credorTest2 = new Credor(2L, "Beltrano", 2222.22, new java.util.Date(222222));'
         Given I evaluate 'credorComparator = new CredorComparator();'
         And expression 'credorComparator.compare(credorTest1, credorTest2) < 0' evaluates to <true>
         Then award .03 points
+
+    Scenario: Check comparator greater than result
         Given expression 'credorComparator.compare(credorTest2, credorTest1) > 0' evaluates to <true>
         Then award .03 points
+
+    Scenario: Check comparator equal result
         Given expression 'credorComparator.compare(credorTest1, credorTest1) == 0' evaluates to <true>
         Then award .03 points
 
@@ -56,8 +68,12 @@ Feature: Scans application for packages and classes
         And I import <processaPagamentoClass>
         And class <processaPagamentoClass> declares field 'reader' save in <readerField>
         And field <readerField> is of type 'java.io.BufferedReader'
-        And I evaluate 'ProcessaPagamento pp1Test = new ProcessaPagamento(testFile)'
+
+    Scenario: Check existent file initialization
+        Given I evaluate 'ProcessaPagamento pp1Test = new ProcessaPagamento(testFile)'
         Then award .05 points
+
+    Scenario: Check non-existent file initialization
         Given I evaluate 'java.io.File dummyFile = new File("/dummy/file.txt")'
         And evaluating 'new ProcessaPagamento(dummyFile)' throws instance of 'java.io.FileNotFoundException' save in <dummyEx>
         Then award .05 points
@@ -68,8 +84,12 @@ Feature: Scans application for packages and classes
         And I import <processaPagamentoClass>
         And class <processaPagamentoClass> declares field 'reader' save in <readerField>
         And field <readerField> is of type 'java.io.BufferedReader'
-        And I evaluate 'ProcessaPagamento pp1Test = new ProcessaPagamento(testFilePath)'
+
+    Scenario: Check existent file initialization
+        Given I evaluate 'ProcessaPagamento pp1Test = new ProcessaPagamento(testFilePath)'
         Then award .05 points
+
+    Scenario: Check non-existent file initialization
         Given evaluating 'new ProcessaPagamento("/dummy/file.txt")' throws instance of 'java.io.FileNotFoundException' save in <dummyEx>
         Then award .05 points
 
