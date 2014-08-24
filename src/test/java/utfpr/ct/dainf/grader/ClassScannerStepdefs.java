@@ -111,7 +111,7 @@ public class ClassScannerStepdefs {
         boolean found = false;
         int i = 0;
         while (!found && i < genTypes.length) {
-            found = genTypes[i].toString().startsWith(intName);
+            found = genTypes[i].getTypeName().startsWith(intName);
             i++;
         }
         assertTrue(found, String.format("'%s' does not implement '%s'", clazz.getName(), intName));
