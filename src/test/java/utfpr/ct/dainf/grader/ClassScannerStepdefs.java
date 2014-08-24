@@ -95,7 +95,7 @@ public class ClassScannerStepdefs {
     public void classExists(String qcn, String var) throws Throwable {
         Class clazz;
         try {
-            clazz = Class.forName(qcn);
+            clazz = Class.forName(qcn, false, ClassLoader.getSystemClassLoader());
         } catch (ClassNotFoundException e) {
             clazz = null;
             Reporter.log(String.format("Class '%s' not found", qcn), true);
@@ -349,9 +349,9 @@ public class ClassScannerStepdefs {
         bsh.eval(String.format(exp, expression));
         Throwable t = (Throwable) bsh.get("evalException");
         bsh.set(var, t);
-        boolean isInstance = Class.forName(exceptionName).isInstance(t);
+        boolean isInstance = Class.forName(exceptionName, false, ClassLoader.getSystemClassLoader()).isInstance(t);
         assertNotNull(t, String.format("Expression '%s' does not throw any exception", expression));
-        t.getClass().isInstance(Class.forName(exceptionName));
+        t.getClass().isInstance(Class.forName(exceptionName, false, ClassLoader.getSystemClassLoader()));
         assertTrue(isInstance, String.format("Expression '%s' does not throw instance of '%s'", expression, exceptionName));
         Reporter.log(String.format("Expression '%s' throws '%s'", expression, t.getClass().getName()), true);
     }

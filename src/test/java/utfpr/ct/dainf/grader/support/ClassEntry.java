@@ -1,8 +1,6 @@
 package utfpr.ct.dainf.grader.support;
 
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -74,7 +72,7 @@ public class ClassEntry {
     
     public Class getClassObject() {
         try {
-            return Class.forName(toString());
+            return Class.forName(toString(), false, ClassLoader.getSystemClassLoader());
         } catch (ClassNotFoundException ex) {
             return null;
         }
