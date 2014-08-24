@@ -189,7 +189,10 @@ public class ClassScannerStepdefs {
     @Given("^expression '(.+)' evaluates to <(.+)>$")
     public void expressionEvaluatesTo(String expression, String value)
             throws Throwable {
-        Object expValue = bsh.eval(expression);
+        InterpreterRunner ir = new InterpreterRunner(bsh, expression);
+        ir.start();
+        ir.join(scriptTimeout);
+        Object expValue = ir.getResult();
         Object testValue = bsh.eval(value);
         assertEquals(expValue, testValue, String.format("Expression '%s' value does not equal expected '%s' value", expression, testValue));
         Reporter.log(String.format("Expression '%s' value equals expected '%s' value", expression, testValue), true);
