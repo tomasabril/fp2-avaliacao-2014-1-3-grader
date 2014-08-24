@@ -211,27 +211,17 @@ Feature: Scans application for packages and classes
 
     Scenario: Run program and check for input processing. (0.2)
         Given I report 'GRADING TASK 11...'
-        Given class 'Avaliacao3' exists somewhere store class in <clazz>
-        And I import <clazz>
-        Given I set output to <mainout>
-        Given I set input from file <inputFile>
-        And I evaluate 'Avaliacao3.main(new String[0])'
-        And I set output to <default>
-        Given I set input from file <default>
-        And I evaluate 'outstr = mainout.toString()'
-        And expression 'outstr.trim().isEmpty()' evaluates to <false>
-        Then award .05 points
         Given expression 'outstr.contains(credorListTest.get(1).toString())' evaluates to <true>
         And expression 'outstr.contains(credorListTest.get(2).toString())' evaluates to <true>
-        Then award .05 points
+        Then award .06 points
 
     Scenario: Check for non-existent record treatment.
         Given expression 'outstr.toLowerCase().contains("inexistente")' evaluates to <true>
-        Then award .05 points
+        Then award .07 points
 
     Scenario: Check for non-numeric input treatment.
         Given expression 'outstr.toLowerCase().contains("informe")' evaluates to <true>
-        Then award .05 points
+        Then award .07 points
 
     Scenario: Report final grade.
         Given I report grade formatted as 'FINAL GRADE: %.1f'
