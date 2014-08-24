@@ -371,6 +371,12 @@ public class ClassScannerStepdefs {
         if (!member.isAccessible()) member.setAccessible(true);
     }
     
+    @Given("^I report <(.+)>$")
+    public void reportExpressionValue(String exp) throws Throwable {
+        String result = bsh.eval(exp).toString();
+        Reporter.log(result, true);
+    }
+        
     @Given("^I report '(.+)'$")
     public void report(String msg) {
         Reporter.log(msg, true);

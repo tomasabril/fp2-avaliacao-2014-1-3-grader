@@ -201,6 +201,7 @@ Feature: Scans application for packages and classes
         And I set output to <default>
         Given I set input from file <default>
         And I evaluate 'outstr = mainout.toString()'
+        Given I report <"OUTPUT: \n" + outstr>
         And expression 'outstr.trim().isEmpty()' evaluates to <false>
         Then award .05 points
         And expression 'outstr.contains(credorListTest.get(0).toString())' evaluates to <true>

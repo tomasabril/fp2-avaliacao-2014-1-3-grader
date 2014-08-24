@@ -40,7 +40,7 @@ public class ProcessaPagamentoTest {
         Double valor = Long.valueOf(linha.substring(71, 83)) / 100.0;
         GregorianCalendar gc = new GregorianCalendar(
                 Integer.parseInt(linha.substring(83, 87)),
-                Integer.parseInt(linha.substring(87, 89)),
+                Integer.parseInt(linha.substring(87, 89))-1,
                 Integer.parseInt(linha.substring(89, 91)));
         Date data = gc.getTime();
         return new CredorTest(cpf, nome, valor, data);
