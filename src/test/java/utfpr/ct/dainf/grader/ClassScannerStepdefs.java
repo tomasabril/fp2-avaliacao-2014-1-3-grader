@@ -349,7 +349,9 @@ public class ClassScannerStepdefs {
     public void evaluateThrowing(String expression, String exceptionName, String var) throws Throwable {
         final String exp = "Throwable evalException = null;" +
                            "try { %s; } catch (Throwable t) { evalException = t; }";
-        bsh.eval(String.format(exp, expression));
+        InterpreterRunner ir = new InterpreterRunner(bsh, String.format(exp, expression));
+        ir.start();
+        ir.join(scriptTimeout);
         Throwable t = (Throwable) bsh.get("evalException");
         bsh.set(var, t);
         boolean isInstance = Class.forName(exceptionName, false, ClassLoader.getSystemClassLoader()).isInstance(t);
